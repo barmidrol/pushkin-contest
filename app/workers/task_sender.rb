@@ -6,7 +6,7 @@ class TaskSender
     task = Task.find_by id: id_task
 
     uri = URI.parse(user.url)
-    parameters = {'question' => task.question, 'level' => task.level}
+    parameters = {id: task.id, question: task.question, level: task.level}.to_json
     response = Net::HTTP.post_form(uri, parameters)
 
     puts "Task sender".red

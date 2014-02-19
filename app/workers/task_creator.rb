@@ -25,7 +25,7 @@ class TaskCreator
       task.answer = answer
       task.level = 2
     when 3, 4
-      # 2 or 3 strings and 2 or 3 words in response
+      # 2 or 3 strings and 2 or 3 words in response separated by spaces
       poem = Poem.all.sample n-1
       str = poem.map { |p| p.content.split("\n").sample(1).join }
       answer = str.map { |s| s.split(" ").sample }
@@ -36,7 +36,7 @@ class TaskCreator
       task.answer = answer.join(" ")
       task.level = n-1
     when 5
-      # string with changed word. Answer is {"wrong_word" => "correct_word"}
+      # string with changed word. Answer is wrong_word correct_word separated by spaces
       str = Poem.all.sample(1).first.content.split("\n").sample
       correct_word = str.split(" ").sample
       correct_word = correct_word.gsub(/[[:punct:]]|\u2014/,"")

@@ -1,4 +1,5 @@
 PushkinContest::Application.routes.draw do
+  get "quiz/answer"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -65,5 +66,7 @@ PushkinContest::Application.routes.draw do
   post 'registration', to: 'users#registration'
   post 'test', to: 'users#test_bot'  # test ars
   get 'rating', to: 'users#rating'
+
+  post 'quiz', to: 'quiz#answer'
 
 end
