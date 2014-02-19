@@ -50,3 +50,4 @@ gem 'simple_form'
 gem 'bootstrap-sass-rails'
 gem 'sidekiq'
 gem 'pry-rails'
+gem 'whenever', :require => false
