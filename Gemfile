@@ -46,3 +46,5 @@ end
 
 gem 'mechanize'
 gem 'colored'
+gem 'simple_form'
+gem 'bootstrap-sass-rails'

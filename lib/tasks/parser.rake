@@ -18,7 +18,7 @@ namespace :db do
 
     id_poems.each do |id|
       link = URL + id + "/p.1/index.html"
-      
+
       page = mechanize.get(link)
 
       title = page.parser.css('.title h1').text

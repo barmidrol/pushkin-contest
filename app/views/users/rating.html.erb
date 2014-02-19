@@ -1,0 +1,40 @@
+<meta http-equiv="refresh" content="5" >
+<div class="row">
+  <div class="container">
+
+    <hr>
+
+    <div class='col-md-8'>
+      <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Рейтинг</div>
+
+        <!-- Table -->
+        <table class="table">
+          <thead>
+          <tr>
+            <th>Rating</th>
+            <th>Username</th>
+            <th>Score</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @users.each_with_index do |u, index| %>
+              <tr>
+                <th><%= index %></th>
+                <th><%= u.username %></th>
+                <th><%= u.rating %></th>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class='col-md-4'>
+      <div class = 'well'>
+        Осталось столько-то мин
+      </div>
+      </div>
+
+  </div>
+</div>
