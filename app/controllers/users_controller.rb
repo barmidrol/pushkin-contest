@@ -2,7 +2,7 @@ class UsersController < ApplicationController
 
   QUESTION = 'Буря мглою небо кроет, Вихри %word% крутя'.freeze
   ANSWER = 'снежные'.freeze
-  RESPONSE_TIME = 10.freeze
+  RESPONSE_IDLE_TIME = 10.seconds.freeze
   NUM_USERS = 10.freeze
 
 
@@ -15,24 +15,25 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.valid?
-      @user.generate_token
+      #@user.generate_token
       uri = URI(@user.url)
       request = Net::HTTP::Post.new(uri.path)
       request.set_form_data('question' => QUESTION)
 
-      response = Net::HTTP.start(uri.hostname, uri.port) do |http|
-        http.read_timeout = RESPONSE_TIME #sec
+      response = Net::HTTP.start(uri.hostname, uri.port, read_timeout: RESPONSE_IDLE_TIME) do |http|
         http.request(request)
       end
 
-      @user.errors.add(:base, 'ANSWER IS FALSE!') if response.body.downcase != ANSWER  #response.body.include?(ANSWER)
+      @user.errors.add(:base, 'Answer is false!')  if response.body.downcase != ANSWER #response.body.include?(ANSWER)
 
       @user.save if @user.errors.empty?
     end
 
-
   rescue Timeout::Error => e
-    @user.errors.add(:base, 'TIME OUT!')
+    @user.errors.add(:base, 'Time is over!')
+
+  rescue Exception => e
+    @user.errors.add(:base, e.message)
   end
 
   def test_bot
