@@ -53,7 +53,9 @@ class TaskCreator
     end
 
     task.save
-    
-    id = Task.last.id
+
+    id_task = Task.last.id
+    SendTaskToUsers.perform_async(id_task) # send this new task to all users with matching level
+    TaskChecker.delay_for(5.minutes, :retry => false).perform_async(id_task) # generate new task in 5 minutes if unsolved
   end
 end
