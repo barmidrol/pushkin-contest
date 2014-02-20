@@ -7,7 +7,7 @@ class TaskCreator
     case level
     when 1
       # user receive string from poem and need to answer poem's title
-      poem = Poem.all.sample(1).first
+      poem = Poem.random_poem
       question = poem.content.split("\n").sample
       answer = poem.title
 
@@ -16,7 +16,7 @@ class TaskCreator
       task.level = 1
     when 2
       # user receive string from poem with one missed word and need to answer right word
-      str = Poem.all.sample(1).first.content.split("\n").sample
+      str = Poem.random_poem.content.split("\n").sample
       answer = str.split(" ").sample
       answer = answer.gsub(/[[:punct:]]|\u2014/,"")
       question = str.sub(answer, "%WORD%")
@@ -26,7 +26,7 @@ class TaskCreator
       task.level = 2
     when 3, 4
       # 2 or 3 strings and 2 or 3 words in response separated by spaces
-      poem = Poem.all.sample n-1
+      poem = Poem.order('random()').limit(n-1)
       str = poem.map { |p| p.content.split("\n").sample(1).join }
       answer = str.map { |s| s.split(" ").sample }
       answer = answer.map { |a| a.gsub(/[[:punct:]]|\u2014/,"") }
@@ -37,11 +37,11 @@ class TaskCreator
       task.level = n-1
     when 5
       # string with changed word. Answer is wrong_word correct_word separated by spaces
-      str = Poem.all.sample(1).first.content.split("\n").sample
+      str = Poem.random_poem.content.split("\n").sample
       correct_word = str.split(" ").sample
       correct_word = correct_word.gsub(/[[:punct:]]|\u2014/,"")
       question = str
-      str = Poem.all.sample(1).first.content.split("\n").sample
+      str = Poem.random_poem.content.split("\n").sample
       wrong_word = str.split(" ").sample
       wrong_word = wrong_word.gsub(/[[:punct:]]|\u2014/,"")
       question = question.gsub(correct_word, wrong_word)
