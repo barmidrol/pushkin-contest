@@ -6,7 +6,11 @@ class CronWorker
     last_task = Task.last
 
     return if last_user.nil?
-    generate_new_task if last_task.nil? # or maybe we need to find task with all possible levels and check them?
+    
+    if last_task.nil? # or maybe we need to find task with all possible levels and check them?
+      generate_new_task 
+      return
+    end
 
     time = Time.now - last_task.created_at
     minutes_passed = time/60
