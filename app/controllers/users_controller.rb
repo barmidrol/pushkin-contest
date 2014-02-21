@@ -1,26 +1,18 @@
 class UsersController < ApplicationController
 
-  NUM_USERS = 10.freeze
-
-
-  def index
+  def new
     @user = User.new
-    render 'registration'
   end
 
-  def registration
+  def create
     @user = User.new(user_params)
 
-    redirect_to rating_path and return if @user.registration
-  end
+    if @user.save
+      redirect_to root_path, notice: 'Success'
+    else
+      render :new
+    end
 
-  def test_bot
-    render text: ANSWER
-  end
-
-
-  def rating
-    @users = User.rating.limit(NUM_USERS)
   end
 
   private
