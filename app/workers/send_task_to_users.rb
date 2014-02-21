@@ -6,8 +6,6 @@ class SendTaskToUsers
     need_rating = task.level * 50
     users = User.all.where("rating >= ?", need_rating)
 
-    users.each do |user|
-      TaskSender.perform_async(user.id, id_task)
-    end
+    users.each { |user| TaskSender.perform_async(user.id, id_task) }
   end
 end

@@ -2,16 +2,7 @@ class CronWorker
   include Sidekiq::Worker
 
   def perform
-    last_user = User.last
-    last_task = Task.last
-
-    return if last_user.nil?
-    
-    if last_task.nil? # or maybe we need to find task with all possible levels and check them?
-      generate_new_task 
-      return
-    end
-
+    # TODO: find task per level and create if it does not exists
     time = Time.now - last_task.created_at
     minutes_passed = time/60
 
@@ -21,7 +12,7 @@ class CronWorker
   def generate_new_task
     levels = [1,2,3,4,5]
     levels.each do |level|
-      users = User.find_by level: level
+      users = User.find_by(level: level)
       TaskCreator.perform_async(level) unless users.nil?
     end
   end

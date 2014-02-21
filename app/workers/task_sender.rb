@@ -1,15 +1,17 @@
 class TaskSender
   include Sidekiq::Worker
 
-  def perform(id_user, id_task)
-    user = User.find_by id: id_user
-    task = Task.find_by id: id_task
+  def perform(user_id, task_id)
+    logger = Logger.new('log/task_sender')
+
+    user = User.find(user_id)
+    task = Task.find(task_id)
 
     uri = URI.parse(user.url)
     parameters = {id: task.id, question: task.question, level: task.level}.to_json
-    response = Net::HTTP.post_form(uri, parameters)
+    Net::HTTP.post_form(uri, parameters)
 
-    puts "Task sender".red
-    puts response.message.to_s.red
+    # TODO: add some logs here
   end
+
 end

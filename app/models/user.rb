@@ -6,6 +6,8 @@ class User < ActiveRecord::Base
 
   before_validation :generate_token, on: :create
 
+  # TODO: store level of user and validate
+
   # TODO: add url validation for herokuapp domain
   # http://my.herokuapp.com
 
@@ -18,6 +20,10 @@ class User < ActiveRecord::Base
 
   def generate_token
     self.token = SecureRandom.hex
+  end
+
+  def quiz_url
+    self.url + '/quiz.json'
   end
 
   def success_registration

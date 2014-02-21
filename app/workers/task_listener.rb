@@ -1,23 +1,16 @@
 class TaskListener
   include Sidekiq::Worker
 
-  def perform(task_id, answer, token)
-    # now we need to need to make sure, that we have such user
-    user = User.find_by token: token
-    user_id = user.id
-
-    # and such task
-    task = task.find_by id: task_id
-
-    # is task already solved?
-    return if task.answered
+  def perform(task_id, user_id, answer)
+    task, user = Task.find(task_id), User.find(user_id)
 
     if task.answer.downcase == answer.downcase
-      task.update_attributes answered: true, user_id: user_id
-      rating = user.rating + 1
-      user.update_attributes rating: rating
-
-      TaskCreator.perform_async(task.level) # now we need to generate new task for current level
+      ActiveRecord::Base.transaction do
+        task.update_attributes answered: true, user_id: user_id
+        rating = user.rating + 1
+        user.update_attributes rating: rating
+      end
     end
+    TaskCreator.perform_async(task.level)
   end
 end
