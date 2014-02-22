@@ -7,7 +7,7 @@ class TaskSender
     user = User.find(user_id)
     task = Task.find(task_id)
 
-    uri = URI.parse(user.url)
+    uri = URI.parse(user.url + "/quiz")
     parameters = {id: task.id, question: task.question, level: task.level}.to_json
     Net::HTTP.post_form(uri, parameters)
 

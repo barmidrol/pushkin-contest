@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   # TODO: add url validation for herokuapp domain
   # http://my.herokuapp.com
 
-  validates :username, uniqueness: true, present: true
+  validates :username, uniqueness: true, presence: true
   validates :url, presence: true, url: true
   validates :token, uniqueness: true
   validate :success_registration

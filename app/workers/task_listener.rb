@@ -10,6 +10,14 @@ class TaskListener
         rating = user.rating + 1
         user.update_attributes rating: rating
       end
+
+      uri = URI.parse(user.url + "/result")
+      parameters = {result: "good job"}.to_json
+      Net::HTTP.post_form(uri, parameters)
+    else
+      uri = URI.parse(user.url + "/result")
+      parameters = {result: "wrong answer"}.to_json
+      Net::HTTP.post_form(uri, parameters)
     end
     TaskCreator.perform_async(task.level)
   end
