@@ -28,6 +28,6 @@ class QuizController < ApplicationController
 
     TaskListener.perform_async(task_id, answer, token)
 
-    render :error, status: :error
+    #render :error, status: :error
   end
 end
