@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   RESPONSE_IDLE_TIME = 10.seconds.freeze
 
   before_validation :set_defaults, :correct_url, on: :create
-  after_validation :success_registration, if: -> {self.errors.empty?}
+  after_validation :success_registration, on: :create,  if: -> {self.errors.empty?}
 
   # TODO: store level of user and validate
 
