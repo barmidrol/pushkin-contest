@@ -4,22 +4,28 @@ class User < ActiveRecord::Base
   ANSWER = 'снежные'.freeze
   RESPONSE_IDLE_TIME = 10.seconds.freeze
 
-  before_validation :generate_token, on: :create
+  before_validation :set_defaults, :correct_url, on: :create
+  after_validation :success_registration, on: :create, if: -> { self.errors.empty? }
 
   # TODO: store level of user and validate
 
-  # TODO: add url validation for herokuapp domain
-  # http://my.herokuapp.com
-
   validates :username, uniqueness: true, presence: true
-  validates :url, presence: true, url: true
   validates :token, uniqueness: true
-  validate :success_registration
+  validates :level, presence: true, numericality: true
+  validate :valid_heroku_url
 
   scope :rating, -> { order('rating desc') }
 
-  def generate_token
+  def set_defaults
     self.token = SecureRandom.hex
+    self.level ||= 1
+  end
+
+  def correct_url
+    if self.url
+      self.url.strip!
+      self.url.gsub!(/\/*$/, '')
+    end
   end
 
   def quiz_url
@@ -27,27 +33,28 @@ class User < ActiveRecord::Base
   end
 
   def success_registration
-    uri = URI(self.url)
-    # TODO: /registration
+    uri = URI("#{self.url}/registration")
 
-    request = Net::HTTP::Post.new(uri.path)
+    request = Net::HTTP::Post.new(uri)
     request.set_form_data(question: QUESTION, token: self.token)
 
     response = Net::HTTP.start(uri.hostname, uri.port, read_timeout: RESPONSE_IDLE_TIME) do |http|
       http.request(request)
     end
 
-    unless response.body.downcase == ANSWER #response.body.include?(ANSWER)
+    unless response.body.force_encoding("UTF-8").downcase == ANSWER
       self.errors.add(:base, 'Answer is false!')
     end
 
   rescue Net::ReadTimeout
     self.errors.add(:base, 'Time is over')
-    false
 
   rescue Exception => e
     self.errors.add(:base, e.message)
-    false
+  end
+
+  def valid_heroku_url
+    self.errors.add(:base, 'Not valid url') unless self.url && /^(https?:\/\/[\S]+)(\.herokuapp\.com\/?)$/ =~  self.url
   end
 
 end

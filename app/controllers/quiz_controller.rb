@@ -9,7 +9,7 @@ class QuizController < ApplicationController
     end
 
     if task.solved
-      uri = URI.parse(user.url + "/result")
+      uri = URI.parse("#{user.url}/result")
       parameters = {result: "task is already solved"}.to_json
       Net::HTTP.post_form(uri, parameters)
     end

@@ -11,11 +11,6 @@ PushkinContest::Application.routes.draw do
   resources :rating, only: [:index]
 
   get "quiz/answer"
-
-  post 'registration', to: 'users#registration'
-  post 'test', to: 'users#test_bot'  # test ars
-  get 'rating', to: 'users#rating'
-
   post 'quiz', to: 'quiz#answer'
 
 end
