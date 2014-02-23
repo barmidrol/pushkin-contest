@@ -1,8 +1,8 @@
 class TaskListener
   include Sidekiq::Worker
 
-  def perform(task_id, user_id, answer)
-    task, user = Task.find(task_id), User.find(user_id)
+  def perform(task_id, answer, token)
+    task, user = Task.find(task_id), User.find_by(token: token)
 
     if task.answer.downcase == answer.downcase
       ActiveRecord::Base.transaction do

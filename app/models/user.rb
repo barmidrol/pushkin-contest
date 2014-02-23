@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   RESPONSE_IDLE_TIME = 10.seconds.freeze
 
   before_validation :set_defaults, :correct_url, on: :create
-  after_validation :success_registration, on: :create,  if: -> {self.errors.empty?}
+  after_validation :success_registration, on: :create, if: -> { self.errors.empty? }
 
   # TODO: store level of user and validate
 
@@ -22,7 +22,10 @@ class User < ActiveRecord::Base
   end
 
   def correct_url
-    self.url.strip! if self.url
+    if self.url
+      self.url.strip!
+      self.url.gsub!(/\/*$/, '')
+    end
   end
 
   def quiz_url
@@ -30,17 +33,16 @@ class User < ActiveRecord::Base
   end
 
   def success_registration
-    uri = URI(self.url)
-    # TODO: /registration
+    uri = URI("#{self.url}/registration")
 
-    request = Net::HTTP::Post.new(uri.host)
+    request = Net::HTTP::Post.new(uri)
     request.set_form_data(question: QUESTION, token: self.token)
 
     response = Net::HTTP.start(uri.hostname, uri.port, read_timeout: RESPONSE_IDLE_TIME) do |http|
       http.request(request)
     end
 
-    unless response.body.downcase == ANSWER #response.body.include?(ANSWER)
+    unless response.body.force_encoding("UTF-8").downcase == ANSWER
       self.errors.add(:base, 'Answer is false!')
     end
 
