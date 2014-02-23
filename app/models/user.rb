@@ -28,9 +28,9 @@ class User < ActiveRecord::Base
     end
   end
 
-  def quiz_url
-    self.url + '/quiz.json'
-  end
+  #def quiz_url
+  #  self.url + '/quiz.json'
+  #end
 
   def success_registration
     uri = URI("#{self.url}/registration")
