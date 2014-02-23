@@ -10,6 +10,7 @@ class TaskCreator::Level3 < TaskCreator::Base
 
     @task.question = question.join(" %NEWLINE% ")
     @task.answer = answer.join(" ")
+    @task.poem_id = poem.first.id
   end
 
   def level

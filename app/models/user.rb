@@ -54,7 +54,7 @@ class User < ActiveRecord::Base
   end
 
   def valid_heroku_url
-    self.errors.add(:base, 'Not valid url') unless self.url && /^(https?:\/\/[\S]+)(\.herokuapp\.com\/?)$/ =~  self.url
+    #self.errors.add(:base, 'Not valid url') unless self.url && /^(https?:\/\/[\S]+)(\.herokuapp\.com\/?)$/ =~  self.url
   end
 
 end
