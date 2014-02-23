@@ -8,7 +8,7 @@ class CronWorker
     tasks.each do |t|
       TaskCreatorWorker.perform_async(t.level) if t.nil? or t.answered
       if !t.answered and (Time.now - t.created_at)/60 > 5
-        t.answered = true
+        t.update_attribute(:answered, true)
         TaskCreatorWorker.perform_async(t.level)
       end
     end
