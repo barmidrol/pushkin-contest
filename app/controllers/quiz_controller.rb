@@ -1,6 +1,6 @@
 class QuizController < ApplicationController
   def answer
-    task = Task.where(id: params[:id], answered: false).first
+    task = Task.where(id: params[:task_id], answered: false).first
     answer = params[:answer]
     user = User.find_by(token: params[:token])
 

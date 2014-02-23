@@ -9,7 +9,7 @@ class TaskSender
 
     uri = URI.parse("#{user.url}/quiz")
     #parameters = {id: task.id, question: task.question, level: task.level}.to_json
-    parameters = {id: task.id, question: task.question, level: task.level}
+    parameters = {task_id: task.id, question: task.question, task_level: task.level}
     Net::HTTP.post_form(uri, parameters)
 
     # TODO: add some logs here
