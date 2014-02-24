@@ -38,11 +38,11 @@ class User < ActiveRecord::Base
     self.level = case self.rating
                    when 0..100
                      1
-                   when 101..10000
+                   when 101..1000
                      2
-                   when 10001..100000
+                   when 1001..10000
                      3
-                   when 100001..1000000
+                   when 10001..100000
                      4
                    else
                      5
