@@ -14,9 +14,6 @@ class TaskSender
     puts "TaskSender user #{user_id} task #{task_id}".red
     puts "#{uri}".red
 
-    #parameters = {task_id: task.id, question: task.question, task_level: task.level}
-    #Net::HTTP.post_form(uri, parameters)
-
     request = Net::HTTP::Post.new(uri)
     request.set_form_data(task_id: task.id, question: task.question, task_level: task.level)
     response = Net::HTTP.start(uri.hostname, uri.port, read_timeout: RESPONSE_TIME) do |http|
@@ -25,10 +22,8 @@ class TaskSender
 
     puts "#{response}".red
 
-    #request = Net::HTTP::Post.new(uri)
-    #request.post_form(id: task.id, question: task.question, level: task.level)
-
     # TODO: add some logs here
+    # логи для слабых
   end
 
 end

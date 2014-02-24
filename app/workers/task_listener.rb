@@ -22,6 +22,11 @@ class TaskListener
       uri = URI.parse("#{user.url}/result")
       parameters = {result: "wrong answer"}
       Net::HTTP.post_form(uri, parameters)
+
+      ActiveRecord::Base.transaction do
+        rating = user.rating - 1
+        user.update_attributes rating: rating
+      end
     end
     TaskCreatorWorker.perform_async(task.level)
   end
