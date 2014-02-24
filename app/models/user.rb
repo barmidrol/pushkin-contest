@@ -5,9 +5,8 @@ class User < ActiveRecord::Base
   RESPONSE_IDLE_TIME = 10.seconds.freeze
 
   before_validation :set_defaults, :correct_url, on: :create
+  before_validation :calc_level, on: :update
   after_validation :success_registration, on: :create, if: -> { self.errors.empty? }
-
-  # TODO: store level of user and validate
 
   validates :username, uniqueness: true, presence: true
   validates :token, uniqueness: true
@@ -32,6 +31,23 @@ class User < ActiveRecord::Base
   #  self.url + '/quiz.json'
   #end
 
+
+  def calc_level
+    self.level = case self.rating
+                   when 0..10
+                     1
+                   when 11..20
+                     2
+                   when 21..30
+                     3
+                   when 31..40
+                     4
+                   else
+                     5
+                 end
+  end
+
+
   def success_registration
     uri = URI("#{self.url}/registration")
 
@@ -54,7 +70,7 @@ class User < ActiveRecord::Base
   end
 
   def valid_heroku_url
-    #self.errors.add(:base, 'Not valid url') unless self.url && /^(https?:\/\/[\S]+)(\.herokuapp\.com\/?)$/ =~  self.url
+    self.errors.add(:base, 'Not valid url') unless self.url && /^(https?:\/\/[\S]+)(\.herokuapp\.com\/?)$/ =~  self.url
   end
 
 end
