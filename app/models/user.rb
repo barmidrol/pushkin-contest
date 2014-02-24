@@ -36,13 +36,13 @@ class User < ActiveRecord::Base
   def calc_level
     self.rating ||= 1
     self.level = case self.rating
-                   when 0..10
+                   when 0..100
                      1
-                   when 11..20
+                   when 101..10000
                      2
-                   when 21..30
+                   when 10001..100000
                      3
-                   when 31..40
+                   when 100001..1000000
                      4
                    else
                      5
