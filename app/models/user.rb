@@ -5,8 +5,9 @@ class User < ActiveRecord::Base
   RESPONSE_IDLE_TIME = 10.seconds.freeze
 
   before_validation :set_defaults, :correct_url, on: :create
-  before_validation :calc_level, on: :update
   after_validation :success_registration, on: :create, if: -> { self.errors.empty? }
+
+  before_update :calc_level
 
   validates :username, uniqueness: true, presence: true
   validates :token, uniqueness: true
@@ -33,6 +34,7 @@ class User < ActiveRecord::Base
 
 
   def calc_level
+    self.rating ||= 1
     self.level = case self.rating
                    when 0..10
                      1
@@ -70,7 +72,7 @@ class User < ActiveRecord::Base
   end
 
   def valid_heroku_url
-    self.errors.add(:base, 'Not valid url') unless self.url && /^(https?:\/\/[\S]+)(\.herokuapp\.com\/?)$/ =~  self.url
+    #self.errors.add(:base, 'Not valid url') unless self.url && /^(https?:\/\/[\S]+)(\.herokuapp\.com\/?)$/ =~  self.url
   end
 
 end
