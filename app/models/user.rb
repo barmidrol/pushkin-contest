@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   before_validation :set_defaults, :correct_url, on: :create
   after_validation :success_registration, on: :create, if: -> { self.errors.empty? }
 
-  # TODO: store level of user and validate
+  before_update :calc_level
 
   validates :username, uniqueness: true, presence: true
   validates :token, uniqueness: true
@@ -28,9 +28,27 @@ class User < ActiveRecord::Base
     end
   end
 
-  def quiz_url
-    self.url + '/quiz.json'
+  #def quiz_url
+  #  self.url + '/quiz.json'
+  #end
+
+
+  def calc_level
+    self.rating ||= 1
+    self.level = case self.rating
+                   when 0..10
+                     1
+                   when 11..20
+                     2
+                   when 21..30
+                     3
+                   when 31..40
+                     4
+                   else
+                     5
+                 end
   end
+
 
   def success_registration
     uri = URI("#{self.url}/registration")
