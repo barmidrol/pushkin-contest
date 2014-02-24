@@ -5,13 +5,19 @@
     <hr>
 
     <div class="jumbotron">
-      <h1>Условия</h1>
+      <div class="container">
+        <div class='col-md-9'>
+          <h1><b><i>Pushkin Сontest</i></b></h1>
 
-      <p>http://my.herokuapp.com</p>
+          <h3>Rails application for the Rubyroid task.  <%= link_to('About project..', documentation_path) %></h3>
 
-      <p>Высылать задания на ../quiz</p>
+          <p><%= link_to('Sign up', users_path, class: 'btn btn-primary btn-lg') %></p>
 
-      <p><%= link_to('Регистрация', users_path, class: 'btn btn-primary btn-lg')%></p>
+        </div>
+        <div class='col-md-3'>
+          <img src="/images/pushkin.gif" height="100%" width="100%"/>
+        </div>
+      </div>
     </div>
 
     <hr>
@@ -25,7 +31,7 @@
         <table class="table">
           <thead>
           <tr>
-            <th>Rating</th>
+            <th>№</th>
             <th>Username</th>
             <th>Score</th>
           </tr>
@@ -44,7 +50,8 @@
     </div>
     <div class='col-md-4'>
       <div class='well'>
-        Осталось столько-то мин
+        <!--<img src="/images/a_s_pushkin.gif" height="100%" width="100%"/>-->
+        тут должно быть чтото
       </div>
     </div>
 
