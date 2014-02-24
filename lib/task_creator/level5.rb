@@ -10,7 +10,7 @@ class TaskCreator::Level5 < TaskCreator::Base
     wrong_word = str.split(" ").sample
     wrong_word = wrong_word.gsub(/[[:punct:]]$|\u2014/,"")
     question = question.gsub(correct_word, wrong_word)
-    answer = "#{correct_word} #{wrong_word}"
+    answer = "#{wrong_word} #{correct_word}"
 
     @task.question = question
     @task.answer = answer
