@@ -2,27 +2,32 @@ class CronWorker
   include Sidekiq::Worker
 
   def perform
-    last_user = User.last
-    last_task = Task.last
+    levels = [1,2,3,4,5]
+    tasks = levels.map { |l| Task.where(level: l).last }
 
-    return if last_user.nil?
-    
-    if last_task.nil? # or maybe we need to find task with all possible levels and check them?
-      generate_new_task 
-      return
+    puts "CronWorker".red
+
+    tasks.each do |t|
+      puts "task #{t.id} level #{t.level} answered #{t.answered}".red
+      levels.delete(t.level) unless t.nil?
     end
 
-    time = Time.now - last_task.created_at
-    minutes_passed = time/60
+    tasks.each do |t|
+      if t.nil?
+        l = levels.first
+        TaskCreatorWorker.perform_async(l)
+        levels.delete(l)
+      end
 
-    generate_new_task if minutes_passed > 5
-  end
+      if t.answered
+        puts "create task level #{t.level}".red
+        TaskCreatorWorker.perform_async(t.level)
+      end
 
-  def generate_new_task
-    levels = [1,2,3,4,5]
-    levels.each do |level|
-      users = User.find_by level: level
-      TaskCreator.perform_async(level) unless users.nil?
+      if !t.answered and (Time.now - t.created_at)/60 > 5
+        t.update_attribute(:answered, true)
+        TaskCreatorWorker.perform_async(t.level)
+      end
     end
   end
 end

@@ -1,46 +1,31 @@
 class User < ActiveRecord::Base
 
-  QUESTION = 'Буря мглою небо кроет, Вихри %word% крутя'.freeze
-  ANSWER = 'снежные'.freeze
-  RESPONSE_IDLE_TIME = 10.seconds.freeze
+  before_validation :set_token, on: :create
+  before_save :set_level
 
-  validate :username, uniqueness: true, present: true
-  validates :url, presence: true, url: true
-  validate :token, uniqueness: true
+  validates :username, :token, uniqueness: true
+  validates :url, :username, :level, presence: true
+  validates :level, numericality: true
+  validates :url, format: { with: URI::regexp, message: 'Not valid URL' }
+  validates :url, format: { with: /\A.*\.herokuapp\.com\z/,
+                            message: 'Invalid url. Only herokuapp domains are allowed. Example domain:  http://pushckinrocks.herokuapp.com' }
+
+  validates_with ConfirmRegistrationValidator, on: :create
 
   scope :rating, -> { order('rating desc') }
 
-  def generate_token
-    self.token = SecureRandom.urlsafe_base64(nil, false)
+  def set_token
+    self.token = SecureRandom.hex
   end
 
-  def registration
-    uri = URI(self.url)
-    request = Net::HTTP::Post.new(uri.path)
-    request.set_form_data('question' => QUESTION)
-
-    response = Net::HTTP.start(uri.hostname, uri.port, read_timeout: RESPONSE_IDLE_TIME) do |http|
-      http.request(request)
-    end
-
-    if response.body.downcase == ANSWER #response.body.include?(ANSWER)
-      self.generate_token
-      self.save
-    else
-      self.errors.add(:base, 'Answer is false!')
-    end
-
-    self.errors.empty?
-
-
-  rescue Net::ReadTimeout
-    self.errors.add(:base, 'Time is over')
-    false
-
-  rescue Exception => e
-    self.errors.add(:base, e.message)
-    false
+  def set_level
+    self.level = case (self.rating || 0)
+                 when 0..100   then 1
+                 when 101..200 then 2
+                 when 201..300 then 3
+                 when 301..400 then 4
+                 when 401..Float::INFINITY then 5
+                 end
   end
 
 end
-

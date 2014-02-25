@@ -1,13 +1,16 @@
 class SendTaskToUsers
   include Sidekiq::Worker
 
-  def perform(id_task)
-    task = Task.find_by id: id_task
-    need_rating = task.level * 50
-    users = User.all.where("rating >= ?", need_rating)
+  def perform(task_id)
+    puts "SendTaskToUsers".red
+    task = Task.find(task_id)
+    puts "id #{task.id} level #{task.level} answer #{task.answer}".red
 
-    users.each do |user|
-      TaskSender.perform_async(user.id, id_task)
+    users = User.where(level: task.level)
+
+    users.each do |u|
+      puts "user_id #{u.id}".red
+      TaskSender.perform_async(u.id, task.id)
     end
   end
 end

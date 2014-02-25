@@ -1,5 +1,5 @@
 namespace :db do
-  task :parse => :environment do
+  task :parse_test => :environment do
 
     URL = "http://ilibrary.ru/text/"
 
@@ -12,6 +12,7 @@ namespace :db do
 
     id_poems = links.map { |l| l.attributes['href'].value.scan(/\d{3}/).join }
     id_poems = id_poems.drop(8) # drop links to categories
+    id_poems = id_poems[0..9]
 
     num = 0
     size = id_poems.size

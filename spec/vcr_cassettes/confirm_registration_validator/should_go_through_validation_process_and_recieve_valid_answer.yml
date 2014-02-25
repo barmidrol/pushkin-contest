@@ -1,0 +1,57 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:3000/registration
+    body:
+      encoding: UTF-8
+      string: "{\"question\":\"Буря мглою небо кроет, Вихри %WORD% крутя\",\"token\":\"123\"}"
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Content-Type:
+      - application/json
+      Timeout:
+      - '1'
+      Content-Length:
+      - '98'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Ua-Compatible:
+      - chrome=1
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Meta-Request-Version:
+      - 0.2.7
+      Etag:
+      - "\"54e53c803f50fc30c2beca4205078729\""
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 77b3dc1f-31f8-4613-a71f-3ba7e5b0d422
+      X-Runtime:
+      - '0.202751'
+      Connection:
+      - close
+      Server:
+      - thin 1.5.1 codename Straight Razor
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJhbnN3ZXIiOiLRgdC90LXQttC90YvQtSJ9
+    http_version: 
+  recorded_at: Tue, 25 Feb 2014 21:13:42 GMT
+recorded_with: VCR 2.8.0

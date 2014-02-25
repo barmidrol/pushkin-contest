@@ -6,14 +6,22 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+User.delete_all
+
 u = User.new
-u.username = "user"
+u.username = "Alex"
 u.url = "http://yandex.by"
-u.token = "abcd"
+u.level = 3
 u.save
 
-t = Task.new
-t.task_string = "Буря %word% небо кроет"
-t.answer = "мглою"
-t.level = 1
-t.save
+u = User.new
+u.username = "Ars"
+u.url = "http://yandex.by"
+u.level = 5
+u.save
+
+u = User.new
+u.username = "Valik"
+u.url = "http://yandex.by"
+u.level = 5
+u.save

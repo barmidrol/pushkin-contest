@@ -1,15 +1,29 @@
 class TaskSender
   include Sidekiq::Worker
 
-  def perform(id_user, id_task)
-    user = User.find_by id: id_user
-    task = Task.find_by id: id_task
+  RESPONSE_TIME = 1.seconds.freeze
 
-    uri = URI.parse(user.url)
-    parameters = {id: task.id, question: task.question, level: task.level}.to_json
-    response = Net::HTTP.post_form(uri, parameters)
+  def perform(user_id, task_id)
+    #logger = Logger.new('log/task_sender')
 
-    puts "Task sender".red
-    puts response.message.to_s.red
+    user = User.find(user_id)
+    task = Task.find(task_id)
+
+    uri = URI.parse("#{user.url}/quiz")
+
+    puts "TaskSender user #{user_id} task #{task_id}".red
+    puts "#{uri}".red
+
+    request = Net::HTTP::Post.new(uri)
+    request.set_form_data(task_id: task.id, question: task.question, task_level: task.level)
+    response = Net::HTTP.start(uri.hostname, uri.port, read_timeout: RESPONSE_TIME) do |http|
+      http.request(request)
+    end
+
+    puts "#{response}".red
+
+    # TODO: add some logs here
+    # логи для слабых
   end
+
 end

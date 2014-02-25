@@ -1,0 +1,51 @@
+<meta http-equiv="refresh" content="5">
+<div class="row">
+  <div class="container">
+    <hr>
+
+    <div class="jumbotron">
+      <div class="container">
+        <div class='col-md-9'>
+          <h1><b><i>Pushkin Сontest</i></b></h1>
+
+          <h3>Rails application for the Rubyroid task.  <%= link_to('About', documentation_index_path) %></h3>
+
+          <p><%= link_to('Sign up', users_path, class: 'btn btn-primary btn-lg') %></p>
+
+        </div>
+        <div class='col-md-3'>
+          <img src="/images/pushkin.gif" height="100%" width="100%"/>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class='col-md-12'>
+      <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Рейтинг</div>
+
+        <!-- Table -->
+        <table class="table">
+          <thead>
+          <tr>
+            <th>№</th>
+            <th>Username</th>
+            <th>Score</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @users.each_with_index do |u, index| %>
+              <tr>
+                <th><%= index + 1 %></th>
+                <th><%= u.username %></th>
+                <th><%= u.rating %></th>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
