@@ -23,10 +23,11 @@ gem 'simple_form'
 gem 'bootstrap-sass'
 gem 'sidekiq'
 gem 'whenever', :require => false
+gem 'pry-rails'
+gem 'rest-client', '~> 1.6.7'
 
 group :development do
   gem 'nifty-generators'
-  gem 'pry-rails'
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_19, :mri_20, :rbx]
   gem 'foreman'
@@ -48,4 +49,6 @@ end
 
 group :test do
   gem 'database_cleaner', '1.0.1'
+  gem "vcr"
+  gem "webmock", ">= 1.8.0", "< 1.12"
 end
