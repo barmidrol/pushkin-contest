@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   before_validation :set_defaults, :correct_url, on: :create
   after_validation :success_registration, on: :create, if: -> { self.errors.empty? }
 
-  before_update :calc_level
+  before_save :set_level
 
   validates :username, uniqueness: true, presence: true
   validates :token, uniqueness: true
@@ -28,27 +28,15 @@ class User < ActiveRecord::Base
     end
   end
 
-  #def quiz_url
-  #  self.url + '/quiz.json'
-  #end
-
-
-  def calc_level
-    self.rating ||= 1
-    self.level = case self.rating
-                   when 0..100
-                     1
-                   when 101..1000
-                     2
-                   when 1001..10000
-                     3
-                   when 10001..100000
-                     4
-                   else
-                     5
+  def set_level
+    self.level = case (self.rating || 0)
+                 when 0..100   then 1
+                 when 101..200 then 2
+                 when 201..300 then 3
+                 when 301..400 then 4
+                 when 401..Float::INFINITY then 5
                  end
   end
-
 
   def success_registration
     uri = URI("#{self.url}/registration")
@@ -72,7 +60,7 @@ class User < ActiveRecord::Base
   end
 
   def valid_heroku_url
-    #self.errors.add(:base, 'Not valid url') unless self.url && /^(https?:\/\/[\S]+)(\.herokuapp\.com\/?)$/ =~  self.url
+    self.errors.add(:base, 'Not valid url') unless self.url && /^(https?:\/\/[\S]+)(\.herokuapp\.com\/?)$/ =~  self.url
   end
 
 end

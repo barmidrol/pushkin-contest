@@ -9,8 +9,8 @@ PushkinContest::Application.routes.draw do
   end
 
   resources :rating, only: [:index]
+  resources :documentation, only: [:index]
 
   post 'quiz', to: 'quiz#answer'
-  get 'documentation', to: 'documentation#index'
 
 end
