@@ -2,7 +2,6 @@ class SendTaskToUsers
   include Sidekiq::Worker
 
   def perform(task_id)
-    puts "SendTaskToUsers".red
     task = Task.find(task_id)
     puts "id #{task.id} level #{task.level} answer #{task.answer}".red
 

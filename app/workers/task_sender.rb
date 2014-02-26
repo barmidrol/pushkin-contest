@@ -21,9 +21,6 @@ class TaskSender
     end
 
     puts "#{response}".red
-
-    # TODO: add some logs here
-    # логи для слабых
   end
 
 end
