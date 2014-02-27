@@ -21,8 +21,8 @@ describe TaskCreator::Level5 do
     it 'should pick a poem and create right task' do
       subject.generate_task
 
-      "#{word},#{random_word}".should  == subject.task.answer
-      "Я #{random_word} от Эскулапа".should == subject.task.question
+      subject.task.answer.should == "#{word},#{random_word}"
+      subject.task.question.should == "Я #{random_word} от Эскулапа"
 
       subject.task.poem_id.should == poem.id
     end
