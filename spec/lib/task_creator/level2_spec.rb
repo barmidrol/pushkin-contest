@@ -1,4 +1,3 @@
-
 require 'spec_helper'
 
 describe TaskCreator::Level2 do
@@ -9,16 +8,16 @@ describe TaskCreator::Level2 do
     before(:each) do
       Poem.stub_chain(:random, :first).and_return(poem)
       poem.id = 42
-      poem.content = <<-TEXT
-Языков, кто тебе внушил,
-Твое посланье удалое?
-      TEXT
+      poem.content = "Языков, кто тебе внушил,"
+      subject.generate_task
     end
 
     it 'should pick a poem and create right task' do
-      subject.generate_task
-      ["Языков, кто тебе внушил", "Твое посланье удалое"].should include(subject.task.question)
-      subject.task.answer.should == poem.title
+      ["языков", "кто", "тебе", "внушил"].should include(subject.task.answer)
+      ["%WORD%, кто тебе внушил",
+      "Языков, %WORD% тебе внушил",
+      "Языков, кто %WORD% внушил",
+      "Языков, кто тебе %WORD%"].should include(subject.task.question)
       subject.task.poem_id.should == poem.id
     end
 

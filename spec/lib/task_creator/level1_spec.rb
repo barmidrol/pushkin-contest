@@ -18,9 +18,8 @@ describe TaskCreator::Level1 do
 
     it 'should pick a poem and create right task' do
       subject.generate_task
-      binding.pry
       ["Языков, кто тебе внушил", "Твое посланье удалое"].should include(subject.task.question)
-      subject.task.answer.should == poem.title
+      subject.task.answer.should == poem.title.downcase
       subject.task.poem_id.should == poem.id
     end
 
