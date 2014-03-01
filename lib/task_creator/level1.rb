@@ -1,15 +1,14 @@
 class TaskCreator::Level1 < TaskCreator::Base
 
+  level 1
+
   def generate_task
-    p = Poem.random_poem
-    question = p.content.split("\n").sample
-    question = question.gsub(/^\u00A0*/,"")
-    @task.question = question
-    @task.answer = p.title
-    @task.poem_id = p.id
+    poem = Poem.where("title NOT ILIKE ?", '%*%').random.first
+    line = strip_punctuation pick_line(poem.content).first
+
+    @task.question = line
+    @task.answer = poem.title.downcase
+    @task.poem_id = poem.id
   end
 
-  def level
-    1
-  end
 end

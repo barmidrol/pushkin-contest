@@ -1,19 +1,17 @@
 class TaskCreator::Level3 < TaskCreator::Base
 
+  level 3
+
   def generate_task
-    poem = Poem.order('random()').limit(2)
-    str = poem.map { |p| p.content.split("\n").sample(1).join }
-    answer = str.map { |s| s.split(" ").sample }
-    answer = answer.map { |a| a.gsub(/[[:punct:]]$|\u2014/,"") }
-    question = str.each_with_index.map { |s, i| s.gsub(answer[i], "%WORD%") }
-    question = question.map { |q| q.gsub(/^\u00A0*/,"")}
+    poem = Poem.random.first
 
-    @task.question = question.join(" %NEWLINE% ")
-    @task.answer = answer.join(" ")
-    @task.poem_id = poem.first.id
+    lines = pick_lines poem.content, 2
+    words = lines.map {|line| pick_word(line) }
+    question = words.map.with_index { |word, index| lines[index].gsub(word, WORD_STUB) }.join("\n")
+
+    @task.question = question
+    @task.answer = words_to_answer(words)
+    @task.poem_id = poem.id
   end
 
-  def level
-    3
-  end
 end
