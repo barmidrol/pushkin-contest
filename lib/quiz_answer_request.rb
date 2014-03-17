@@ -1,6 +1,7 @@
 class QuizAnswerRequest
   include ActiveModel::Model
   attr_accessor :task_id, :answer, :token
+  attr_reader :task, :user
 
   validates :task_id, :token, :answer, presence: true
   validate :user_existence, :task_existence, :task_still_availible

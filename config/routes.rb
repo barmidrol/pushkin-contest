@@ -1,3 +1,6 @@
+require 'sidekiq/web'
+require 'sidetiq/web'
+
 PushkinContest::Application.routes.draw do
 
   root 'rating#index'
@@ -13,4 +16,5 @@ PushkinContest::Application.routes.draw do
 
   post 'quiz', to: 'quiz#answer'
 
+  mount Sidekiq::Web => '/sidekiq'
 end

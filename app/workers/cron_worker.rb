@@ -1,11 +1,12 @@
 class CronWorker
   include Sidekiq::Worker
+  include Sidetiq::Schedulable
+
+  recurrence { minutely(2) }
 
   def perform
     levels = [1,2,3,4,5]
     tasks = levels.map { |l| Task.where(level: l).last }
-
-    puts "CronWorker".red
 
     tasks.each do |t|
       puts "task #{t.id} level #{t.level} answered #{t.answered}".red
