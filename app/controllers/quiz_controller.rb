@@ -4,8 +4,6 @@ class QuizController < ApplicationController
 
   skip_before_filter :verify_authenticity_token, :only => [:answer]
 
-
-
   def answer
     if quiz_answer_request.invalid?
       render json: { errors: quiz_answer_request.errors.full_messages }
