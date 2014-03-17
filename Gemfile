@@ -10,6 +10,7 @@ gem 'coffee-rails', '~> 4.0.1'
 
 gem 'jquery-rails'
 gem 'jbuilder', '~> 1.2'
+gem 'rabl'
 
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
@@ -21,8 +22,10 @@ gem 'mechanize'
 gem 'colored'
 gem 'simple_form'
 gem 'bootstrap-sass'
+gem 'sinatra', '>= 1.3.0', :require => nil
 gem 'sidekiq'
-gem 'whenever', :require => false
+gem 'sidekiq-failures'
+gem 'sidetiq'
 gem 'pry-rails'
 gem 'rest-client', '~> 1.6.7'
 

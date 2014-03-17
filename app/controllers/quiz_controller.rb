@@ -1,24 +1,47 @@
 class QuizController < ApplicationController
+  helper_method :quiz_answer_request
+  respond_to :json
 
   skip_before_filter :verify_authenticity_token, :only => [:answer]
 
   def answer
-    task = Task.where(id: params[:task_id], answered: false).first
-    answer = params[:answer]
-    user = User.find_by(token: params[:token])
-
-    unless user
-      return #?
+    if quiz_answer_request.invalid?
+      render json: { errors: quiz_answer_request.errors.full_messages }, status: :error
+      return
     end
 
-    if task.answered
-      uri = URI.parse("#{user.url}/result")
-      parameters = {result: "task is already solved"}.to_json
-      Net::HTTP.post_form(uri, parameters)
+    if @task.answer.downcase.strip == @answer.downcase.strip
+      ActiveRecord::Base.transaction do
+        task.update_attributes answered: true, user_id: user.id
+        user.update_attributes rating: user.rating + 1
+      end
+      TaskCreatorWorker.perform_in(30.seconds, task.level)
+      message = 'Correct'
+    else
+      message = 'Wrong'
     end
 
-    TaskListener.perform_async(task.id, answer, params[:token])
-
-    #render :error, status: :error
+    render json: { message: message }, status: :ok
   end
+
+  def user
+    @user||= quiz_answer_request.user
+  end
+
+  def task
+    @task ||= quiz_answer_request.task
+  end
+
+  def answer
+    @answer ||= quiz_answer_request.answer
+  end
+
+  def quiz_answer_request
+    @quiz_answer_request ||= QuizAnswerRequest.new(request_params)
+  end
+
+  def request_params
+    params.slice(:token, :task_id, :answer)
+  end
+
 end
