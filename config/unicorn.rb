@@ -4,7 +4,7 @@
 
 require 'pathname'
 
-APP_PATH = Pathname.new(File.expand_path('../../../',__FILE__)).to_s
+APP_PATH = Pathname.new(File.expand_path('../../',__FILE__)).to_s
 
 working_directory "/var/www/pushkin/current"
 worker_processes 15
