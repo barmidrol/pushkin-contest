@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.1.0'
+# ruby '2.1.1'
 
 gem 'rails', '4.0.3'
 gem 'pg', '~> 0.17.1'
@@ -38,6 +38,9 @@ group :development do
   gem 'rails_layout'
   gem 'brakeman', :require => false
   gem 'letter_opener'
+  gem 'capistrano', '~> 2.15.5'
+  gem 'capistrano-unicorn', require: false
+  gem 'rvm-capistrano'
 end
 
 group :development, :test do
