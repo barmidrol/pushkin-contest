@@ -7,7 +7,7 @@ require 'pathname'
 APP_PATH = Pathname.new(File.expand_path('../../',__FILE__)).to_s
 
 working_directory "/var/www/pushkin/current"
-worker_processes 15
+worker_processes 8
 timeout 180
 preload_app true
 pid "/var/www/pushkin/shared/pids/unicorn.pid"
