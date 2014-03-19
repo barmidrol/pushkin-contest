@@ -1,5 +1,4 @@
 class User < ActiveRecord::Base
-
   before_validation :set_token, on: :create
   before_save :set_level
 
@@ -20,11 +19,11 @@ class User < ActiveRecord::Base
 
   def set_level
     self.level = case (self.rating || 0)
-                 when 0..100   then 1
-                 when 101..200 then 2
-                 when 201..300 then 3
-                 when 301..400 then 4
-                 when 401..Float::INFINITY then 5
+                 when 0..10   then 1
+                 when 11..20 then 2
+                 when 21..30 then 3
+                 when 31..40 then 4
+                 when 41..Float::INFINITY then 5
                  end
   end
 
