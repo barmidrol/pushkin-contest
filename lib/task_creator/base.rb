@@ -44,7 +44,7 @@ class TaskCreator::Base
   end
 
   def pick_word(string)
-    words = string.split(/\s/)
+    words = string.to_s.split(/\s/)
     strip_punctuation words.sample
   end
   alias_method :pick_words, :pick_word

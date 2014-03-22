@@ -125,6 +125,7 @@ GEM
     mini_portile (0.5.2)
     minitest (4.7.5)
     multi_json (1.8.4)
+    mysql2 (0.3.15)
     net-http-digest_auth (1.4)
     net-http-persistent (2.9.4)
     net-scp (1.1.2)
@@ -284,6 +285,7 @@ DEPENDENCIES
   jquery-rails
   letter_opener
   mechanize
+  mysql2
   nifty-generators
   pg (~> 0.17.1)
   pry-rails

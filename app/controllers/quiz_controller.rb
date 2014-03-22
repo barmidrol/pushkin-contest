@@ -10,12 +10,14 @@ class QuizController < ApplicationController
       return
     end
 
+    @answer = params[:answer]
+    @task = Task.find params[:task_id]
     if @task.answer.downcase.strip == @answer.downcase.strip
       ActiveRecord::Base.transaction do
         task.update_attributes answered: true, user_id: user.id
-        user.update_attributes rating: user.rating + 1
+        user.increment! :rating, 1
       end
-      TaskCreatorWorker.perform_in(30.seconds, task.level)
+      TaskCreatorWorker.perform_async(task.level)
       message = 'Correct'
     else
       message = 'Wrong'
@@ -30,10 +32,6 @@ class QuizController < ApplicationController
 
   def task
     @task ||= quiz_answer_request.task
-  end
-
-  def answer
-    @answer ||= quiz_answer_request.answer
   end
 
   def quiz_answer_request

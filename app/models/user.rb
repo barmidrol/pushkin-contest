@@ -1,13 +1,13 @@
 class User < ActiveRecord::Base
   before_validation :set_token, on: :create
-  before_save :set_level
+  before_validation :set_level
 
   validates :username, :token, uniqueness: true
   validates :url, :username, :level, presence: true
   validates :level, numericality: true
   validates :url, format: { with: URI::regexp, message: 'Not valid URL' }
-  validates :url, format: { with: /\A.*\.herokuapp\.com\z/,
-                            message: 'Invalid url. Only herokuapp domains are allowed. Example domain:  http://pushckinrocks.herokuapp.com' }
+  # validates :url, format: { with: /\A.*\.herokuapp\.com\z/,
+  #                           message: 'Invalid url. Only herokuapp domains are allowed. Example domain:  http://pushckinrocks.herokuapp.com' }
 
   validates_with ConfirmRegistrationValidator, on: :create
 

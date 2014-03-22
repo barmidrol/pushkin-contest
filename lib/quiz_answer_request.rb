@@ -6,8 +6,6 @@ class QuizAnswerRequest
   validates :task_id, :token, :answer, presence: true
   validate :user_existence, :task_existence, :task_still_availible
 
-  protected
-
   def user_existence
     unless user.present?
       self.errors.add(:user, 'does not exist')

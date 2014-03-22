@@ -2,32 +2,24 @@ class CronWorker
   include Sidekiq::Worker
   include Sidetiq::Schedulable
 
-  recurrence { minutely(2) }
+  # recurrence { minutely(2) }
+  recurrence { secondly }
 
   def perform
     levels = [1,2,3,4,5]
-    tasks = levels.map { |l| Task.where(level: l).last }
+    tasks = levels.map { |l| Task.where(level: l).last }.compact
 
-    tasks.each do |t|
-      puts "task #{t.id} level #{t.level} answered #{t.answered}".red
-      levels.delete(t.level) unless t.nil?
+    Task.where(answered: false).where('created_at < ?', 5.seconds.ago).each do |task|
+      task.update_attribute(:answered, true)
     end
 
-    tasks.each do |t|
-      if t.nil?
-        l = levels.first
-        TaskCreatorWorker.perform_async(l)
-        levels.delete(l)
-      end
+    levels.each do |level|
+      count = Task.where(level: level, answered: false).count
+      p "Unanswered tasks for level #{level} = #{count}"
 
-      if t.answered
-        puts "create task level #{t.level}".red
-        TaskCreatorWorker.perform_async(t.level)
-      end
-
-      if !t.answered and (Time.now - t.created_at)/60 > 5
-        t.update_attribute(:answered, true)
-        TaskCreatorWorker.perform_async(t.level)
+      if count.zero?
+        TaskCreatorWorker.perform_async(level)
+        p "TaskCreator for level #{level} was started"
       end
     end
   end
