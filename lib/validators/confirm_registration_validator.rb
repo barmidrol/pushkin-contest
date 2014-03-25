@@ -22,7 +22,7 @@ class ConfirmRegistrationValidator < ActiveModel::Validator
       record.errors.add(:url, 'Registration time exceed')
 
     rescue Exception => e
-      record.errors.add(:url, 'Error on request confirmation!')
+      record.errors.add(:url, "Error on request confirmation! #{e.message}")
     end
 
   end
