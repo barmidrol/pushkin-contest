@@ -2,7 +2,7 @@ require 'bundler/capistrano'
 require 'capistrano-unicorn'
 require 'rvm/capistrano'
 require 'bundler/capistrano'
-# require 'sidekiq/capistrano'
+require 'sidekiq/capistrano'
 
 set :application, "pushkin"
 
