@@ -16,7 +16,7 @@ class ConfirmRegistrationValidator < ActiveModel::Validator
 
       response = RestClient.post uri.to_s, data.to_json, options
       json = JSON.parse(response)
-      self.errors.add(:url, 'Wrong or blank answer form server!') unless json["answer"].downcase == ANSWER
+      self.errors.add(:url, 'Wrong or blank answer form server!') unless json["answer"].force_encoding('UTF-8').downcase == ANSWER
 
     rescue RestClient::RequestTimeout => e
       record.errors.add(:url, 'Registration time exceed')
