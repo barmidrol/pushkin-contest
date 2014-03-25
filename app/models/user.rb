@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   # validates :url, format: { with: /\A.*\.herokuapp\.com\z/,
   #                           message: 'Invalid url. Only herokuapp domains are allowed. Example domain:  http://pushckinrocks.herokuapp.com' }
 
-  validates_with ConfirmRegistrationValidator, on: :create
+  # validates_with ConfirmRegistrationValidator, on: :create
 
   scope :rating, -> { order('rating desc') }
 
