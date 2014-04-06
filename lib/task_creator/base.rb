@@ -13,7 +13,6 @@ class TaskCreator::Base
     def level_number
       @level
     end
-
   end
 
 
@@ -28,7 +27,8 @@ class TaskCreator::Base
   end
 
   def save_task
-    @task.save
+    p "EEEEEEERRRRRRRRRRRORRRRRRRRRRRRRRRR!!!! #{@task.attributes} #{@task.errors.full_messages}" if @task.invalid?
+    @task.save rescue p "EEEEEEERRRRRRRRRRRORRRRRRRRRRRRRRRR WWWWOW!!!! #{@task.attributes} #{@task.errors.full_messages}"
   end
 
   def generate_task
