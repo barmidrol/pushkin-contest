@@ -6,8 +6,9 @@ class CronWorker
 
   def perform
     (1..5).to_a.each do |level|
-      p "CronWorker for level #{level} was started"
       task = TaskCreator::Factory.factory(level).create
+
+      raise "Task is not saved: #{task.to_s}" if task.id.blank?
 
       SendTaskToUsers.perform_at(5.seconds.from_now, task.id)
     end
