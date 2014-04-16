@@ -27,8 +27,7 @@ class TaskCreator::Base
   end
 
   def save_task
-    p "EEEEEEERRRRRRRRRRRORRRRRRRRRRRRRRRR!!!! #{@task.attributes} #{@task.errors.full_messages}" if @task.invalid?
-    @task.save rescue p "EEEEEEERRRRRRRRRRRORRRRRRRRRRRRRRRR WWWWOW!!!! #{@task.attributes} #{@task.errors.full_messages}"
+    @task.save!
   end
 
   def generate_task
