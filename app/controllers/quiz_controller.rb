@@ -17,7 +17,6 @@ class QuizController < ApplicationController
         task.update_attributes answered: true, user_id: user.id
         user.increment! :rating, 1
       end
-      TaskCreatorWorker.perform_async(task.level)
       message = 'Correct'
     else
       message = 'Wrong'
