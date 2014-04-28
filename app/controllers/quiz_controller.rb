@@ -12,7 +12,7 @@ class QuizController < ApplicationController
 
     @answer = params[:answer]
     @task = Task.find params[:task_id]
-    if @task.answer.downcase.strip == @answer.downcase.strip
+    if @task.answer.mb_chars.downcase.to_s.strip == @answer.mb_chars.downcase.to_s.strip
       ActiveRecord::Base.transaction do
         task.update_attributes answered: true, user_id: user.id
         user.increment! :rating, 1
