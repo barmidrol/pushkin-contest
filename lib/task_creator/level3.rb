@@ -7,7 +7,7 @@ class TaskCreator::Level3 < TaskCreator::Base
 
     lines = pick_lines poem.content, 2
     words = lines.map {|line| pick_word(line) }
-    question = words.map.with_index { |word, index| lines[index].gsub(word, WORD_STUB) }.join("\n")
+    question = words.map.with_index { |word, index| lines[index].sub(word, WORD_STUB) }.join("\n")
 
     @task.question = question
     @task.answer = words_to_answer(words)

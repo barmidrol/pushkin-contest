@@ -9,7 +9,7 @@ class TaskCreator::Level2 < TaskCreator::Base
     word = pick_word(line)
 
     @task.answer = words_to_answer([word])
-    @task.question = line.gsub(word, WORD_STUB)
+    @task.question = line.sub(word, WORD_STUB)
     @task.poem_id = poem.id
   end
 

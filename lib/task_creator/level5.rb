@@ -8,7 +8,7 @@ class TaskCreator::Level5 < TaskCreator::Base
     line = strip_punctuation pick_line(poem.content).first
     word = pick_word(line)
 
-    @task.question = line.gsub(word, random_word)
+    @task.question = line.sub(word, random_word)
     @task.answer = words_to_answer([word, random_word])
     @task.poem_id = poem.id
   end
