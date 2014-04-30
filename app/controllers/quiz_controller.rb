@@ -16,7 +16,7 @@ class QuizController < ApplicationController
     @task = Task.find params[:task_id]
     if @task.answer.mb_chars.downcase.to_s.strip == @answer.mb_chars.downcase.to_s.strip
       ActiveRecord::Base.transaction do
-        t = Task.where(answered: false, id: params[:task_id])
+        t = Task.find_by(answered: false, id: params[:task_id])
         if t
           t.update_attributes(answered: true, user_id: user.id)
           user.increment! :rating, 1
