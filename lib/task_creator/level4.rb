@@ -10,7 +10,7 @@ class TaskCreator::Level4 < TaskCreator::Base
     question = words.map.with_index { |word, index| lines[index].sub(word, WORD_STUB) }.join("\n")
 
     @task.question = question
-    @task.answer = words_to_answer(words)
+    @task.answer = strip_punctuation(words_to_answer(words))
     @task.poem_id = poem.id
   end
 

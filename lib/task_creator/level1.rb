@@ -7,7 +7,7 @@ class TaskCreator::Level1 < TaskCreator::Base
     line = strip_punctuation pick_line(poem.content).first
 
     @task.question = line
-    @task.answer = poem.title.downcase
+    @task.answer = strip_punctuation(poem.title.downcase)
     @task.poem_id = poem.id
   end
 
