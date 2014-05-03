@@ -12,8 +12,7 @@ class TaskSender
     data = {question: task.question, id: task.id, level: task.level}
     options = {content_type: :json, accept: :json, timeout: RESPONSE_IDLE_TIME}
 
-    p "Posting to client #{uri.to_s}, #{data.to_json}, #{options}"
-    RestClient.post uri.to_s, data.to_json, options
+    retryable(tries: 3) { RestClient.post(uri.to_s, data.to_json, options) }
   end
 
 end

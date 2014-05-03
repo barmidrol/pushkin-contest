@@ -29,6 +29,7 @@ gem 'sidetiq'
 gem 'pry-rails'
 gem 'rest-client', '~> 1.6.7'
 gem 'paper_trail', '~> 3.0.1'
+gem 'retryable', '~> 1.3.5'
 
 
 group :development do
