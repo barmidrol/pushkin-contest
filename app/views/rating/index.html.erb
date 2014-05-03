@@ -40,7 +40,7 @@
           </thead>
           <tbody>
           <% @users.each_with_index do |u, index| %>
-              - color = u.winner? ? 'red' : 'white'
+              <% color = u.winner? ? 'red' : 'white'%>
               <tr style='background-color: <%= color %>;'>
                 <th><%= index + 1 %></th>
                 <th><%= u.username %></th>
