@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140421090852) do
+ActiveRecord::Schema.define(version: 20140503061230) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,14 +35,27 @@ ActiveRecord::Schema.define(version: 20140421090852) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "username",                 null: false
-    t.string   "token",                    null: false
-    t.string   "url",                      null: false
+    t.string   "username",                     null: false
+    t.string   "token",                        null: false
+    t.string   "url",                          null: false
     t.integer  "rating",       default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "level"
-    t.integer  "lock_version", default: 0, null: false
+    t.integer  "lock_version", default: 0,     null: false
+    t.datetime "win_at"
+    t.boolean  "winner",       default: false
   end
+
+  create_table "versions", force: true do |t|
+    t.string   "item_type",  null: false
+    t.integer  "item_id",    null: false
+    t.string   "event",      null: false
+    t.string   "whodunnit"
+    t.text     "object"
+    t.datetime "created_at"
+  end
+
+  add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
 
 end

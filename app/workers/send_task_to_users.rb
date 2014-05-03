@@ -4,7 +4,7 @@ class SendTaskToUsers
 
   def perform(task_id)
     task = Task.find(task_id)
-    users = User.where(level: task.level).order('random()')
+    users = User.where(level: task.level).order('random()').not_winners
 
     p "TaskSender for level #{task.level} has #{users.count} users"
     users.each do |u|

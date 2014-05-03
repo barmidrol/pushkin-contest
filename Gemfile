@@ -28,6 +28,8 @@ gem 'sidekiq-failures'
 gem 'sidetiq'
 gem 'pry-rails'
 gem 'rest-client', '~> 1.6.7'
+gem 'paper_trail', '~> 3.0.1'
+
 
 group :development do
   gem 'nifty-generators'

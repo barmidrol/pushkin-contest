@@ -33,14 +33,20 @@
             <th>№</th>
             <th>Username</th>
             <th>Score</th>
+            <% if @users.any?(&:winner?) %>
+              <th>Completed</th>
+            <% end %>
           </tr>
           </thead>
           <tbody>
           <% @users.each_with_index do |u, index| %>
-              <tr>
+              <tr style='background-color: red;'>
                 <th><%= index + 1 %></th>
                 <th><%= u.username %></th>
                 <th><%= u.rating %></th>
+                <% if @users.any?(&:winner?) %>
+                  <td><%= u.win_at %></td>
+                <% end %>
               </tr>
           <% end %>
           </tbody>

@@ -20,6 +20,7 @@ class QuizController < ApplicationController
         if t
           t.update_attributes(answered: true, user_id: user.id)
           user.increment! :rating, 1
+          user.update_attributes(winner: true, win_at: Time.zone.now) if user.win?
           message = 'Correct'
         else
           message = 'Task is expired'
