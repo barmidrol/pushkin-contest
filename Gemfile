@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
-# ruby '2.1.1'
+ruby '2.2.1'
 
-gem 'rails', '4.0.3'
+gem 'rails', '4.0.13'
 gem 'pg', '~> 0.17.1'
 
 gem 'sass-rails', '~> 4.0.1'
@@ -21,7 +21,7 @@ gem 'rabl'
 gem 'mechanize'
 gem 'colored'
 gem 'simple_form'
-gem 'bootstrap-sass'
+gem 'bootstrap-sass', '~> 3.3.3'
 gem 'sinatra', '>= 1.3.0', :require => nil
 gem 'sidekiq'
 gem 'sidekiq-failures'
@@ -41,7 +41,7 @@ group :development do
   gem 'rails_layout'
   gem 'brakeman', :require => false
   gem 'letter_opener'
-  gem 'capistrano', '~> 2.15.5'
+  gem 'capistrano', '~> 3.4.0'
   gem 'capistrano-unicorn', require: false
   gem 'rvm-capistrano'
 end
