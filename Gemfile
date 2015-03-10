@@ -42,8 +42,11 @@ group :development do
   gem 'brakeman', :require => false
   gem 'letter_opener'
   gem 'capistrano', '~> 3.4.0'
-  gem 'capistrano-unicorn', require: false
-  gem 'rvm-capistrano'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rvm'
+  gem 'capistrano-rails'
+  gem 'capistrano-sidekiq', github: 'Saicheg/capistrano-sidekiq'
+  gem 'capistrano3-unicorn', '~> 0.2.1'
 end
 
 group :development, :test do

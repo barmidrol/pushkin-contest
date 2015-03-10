@@ -1,3 +1,12 @@
-load 'deploy'
-load 'deploy/assets'
-load 'config/deploy'
+# Load DSL and Setup Up Stages
+require 'capistrano/setup'
+#
+# # Includes default deployment tasks
+require 'capistrano/deploy'
+#
+# require 'capistrano/rvm'
+require 'capistrano/bundler'
+require 'capistrano/rails'
+require 'capistrano/rails/assets'
+require 'capistrano/rails/migrations'
+require 'capistrano3/unicorn'
