@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140503061230) do
+ActiveRecord::Schema.define(version: 20150312083216) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,6 +45,12 @@ ActiveRecord::Schema.define(version: 20140503061230) do
     t.integer  "lock_version", default: 0,     null: false
     t.datetime "win_at"
     t.boolean  "winner",       default: false
+    t.string   "name",                         null: false
+    t.string   "surname",                      null: false
+    t.string   "skype",                        null: false
+    t.string   "github",                       null: false
+    t.string   "phone",                        null: false
+    t.string   "vk",                           null: false
   end
 
   create_table "versions", force: true do |t|

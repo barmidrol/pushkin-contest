@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   before_save :set_level
 
   validates :username, :token, uniqueness: true
-  validates :url, :username, presence: true
+  validates :url, :username, :name, :surname, :skype, :github, :phone, :vk, presence: true
   validates :url, format: { with: URI::regexp, message: 'Not valid URL' }
   validates :url, format: { with: /\A.*\.herokuapp\.com\z/,
                             message: 'Invalid url. Only herokuapp domains are allowed. Example domain:  http://pushckinrocks.herokuapp.com' }

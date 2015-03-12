@@ -1,0 +1,11 @@
+en:
+  simple_form:
+    labels:
+      user:
+        username: 'Логин'
+        name: 'Имя'
+        surname: 'Фамилия'
+        skype: 'Имя skype'
+        github: 'Логин github'
+        phone: 'Телефон'
+        vk: 'Ссылка на VK'
