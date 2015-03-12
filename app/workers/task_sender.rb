@@ -1,5 +1,6 @@
 class TaskSender
   include Sidekiq::Worker
+
   sidekiq_options retry: false, backtrace: true
 
   RESPONSE_IDLE_TIME = 1.seconds.freeze

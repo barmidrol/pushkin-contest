@@ -45,7 +45,7 @@ group :development do
   gem 'capistrano-bundler'
   gem 'capistrano-rvm'
   gem 'capistrano-rails'
-  gem 'capistrano-sidekiq', github: 'Saicheg/capistrano-sidekiq'
+  gem 'capistrano-sidekiq'
   gem 'capistrano3-unicorn', '~> 0.2.1'
 end
 

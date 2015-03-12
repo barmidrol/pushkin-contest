@@ -1,5 +1,6 @@
 class SendTaskToUsers
   include Sidekiq::Worker
+
   sidekiq_options retry: false, backtrace: true
 
   def perform(task_id)
