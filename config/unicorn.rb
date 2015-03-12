@@ -10,7 +10,7 @@ working_directory "/var/www/pushkin/current"
 worker_processes 2
 timeout 180
 preload_app true
-pid "/var/www/pushkin/shared/pids/unicorn.pid"
+pid "/var/www/pushkin/tmp/pids/unicorn.pid"
 
 listen "/var/www/pushkin/shared/sockets/unicorn.sock", backlog: 64
 
