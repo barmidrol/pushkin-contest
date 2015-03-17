@@ -46,7 +46,7 @@ describe TaskCreator::Level6 do
         subject.generate_task
 
         subject.task.question.should == "stub stub stub stub"
-        subject.task.answer.should == text
+        subject.task.answer.should == "Я ускользнул от Эскулапа"
 
         subject.task.poem_id.should == poem.id
       end
