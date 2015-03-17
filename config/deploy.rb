@@ -7,7 +7,7 @@ set :deploy_to, '/var/www/pushkin/'
 
 set :linked_files, %w{config/database.yml}
 
-set :linked_dirs, %w{bin log tmp/pids public/assets tmp/cache tmp/sockets vendor/bundle public/system}
+set :linked_dirs, %w{log tmp/pids public/assets tmp/cache tmp/sockets vendor/bundle public/system}
 
 set :unicorn_config_path, "config/unicorn.rb"
 
