@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
   end
 
   def win?
-    self.rating >= 500
+    self.rating >= 600
   end
 
   def set_level
@@ -29,7 +29,8 @@ class User < ActiveRecord::Base
                  when 101..200 then 2
                  when 201..300 then 3
                  when 301..400 then 4
-                 when 401..Float::INFINITY then 5
+                 when 401..500 then 5
+                 when 501..Float::INFINITY then 6
                  end
   end
 
