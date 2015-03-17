@@ -61,6 +61,7 @@ end
 
 group :test do
   gem 'database_cleaner', '1.0.1'
-  gem "vcr"
-  gem "webmock", ">= 1.8.0", "< 1.12"
+  gem 'vcr'
+  gem 'webmock'
+  gem 'test-unit'
 end
