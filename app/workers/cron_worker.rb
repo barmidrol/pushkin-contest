@@ -5,7 +5,7 @@ class CronWorker
   recurrence { secondly(20) }
 
   def perform
-    (1..5).to_a.each do |level|
+    (1..8).to_a.each do |level|
       task = TaskCreator::Factory.factory(level).create
 
       raise "Task is not saved: #{task.to_s}" if task.id.blank?
