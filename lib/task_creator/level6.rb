@@ -5,7 +5,9 @@ class TaskCreator::Level6 < TaskCreator::Base
   def generate_task
     poem = Poem.random.first
 
-    text = strip_punctuation(poem.content)
+    line = pick_line(poem.content)
+
+    text = strip_punctuation(line)
 
     words = text.split(/ /)
 
