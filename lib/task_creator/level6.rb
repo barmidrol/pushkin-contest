@@ -7,7 +7,7 @@ class TaskCreator::Level6 < TaskCreator::Base
 
     line = pick_line(poem.content).first
 
-    text = strip_punctuation(line)
+    text = line.split(//).reject { |s| s =~ /[[:punct:]]/ }.join
 
     words = text.split(/ /)
 

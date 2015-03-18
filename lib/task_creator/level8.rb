@@ -7,7 +7,8 @@ class TaskCreator::Level8 < TaskCreator::Base
 
     line = pick_line(poem.content).first
 
-    text = strip_punctuation(line)
+    text = line.split(//).reject { |s| s =~ /[[:punct:]]/ }.join
+
     shuffled = text.split(//).shuffle
 
     shuffled[rand(0..shuffled.size-1)] = random_symbol
