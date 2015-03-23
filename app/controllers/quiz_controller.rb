@@ -14,7 +14,7 @@ class QuizController < ApplicationController
 
     @answer = params[:answer]
     @task = Task.find params[:task_id]
-    if @task.answer.mb_chars.downcase.to_s.strip == @answer.mb_chars.downcase.to_s.strip
+    if convert(@task.answer) == convert(@answer)
       ActiveRecord::Base.transaction do
         t = Task.find_by(answered: false, id: params[:task_id])
         if t
@@ -47,6 +47,10 @@ class QuizController < ApplicationController
 
   def request_params
     params.slice(:token, :task_id, :answer)
+  end
+
+  def convert(string)
+    string.mb_chars.downcase.normalize.squish.gsub(/\p{P}/, '').to_s
   end
 
 end

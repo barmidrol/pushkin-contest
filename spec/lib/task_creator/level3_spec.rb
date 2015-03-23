@@ -16,7 +16,7 @@ TEXT
     end
 
     it 'should pick a poem and create right task' do
-      ['cкажи,ведь', 'скажи,недаром', 'дядя,ведь', 'дядя,недаром'].should include(subject.task.answer)
+      ['скажи,ведь', 'скажи,недаром', 'дядя,ведь', 'дядя,недаром'].should include(subject.task.answer)
       ["%WORD%, дядя,\n%WORD% недаром?",
        "%WORD%, дядя,\nВедь %WORD%?",
        "Скажи, %WORD%,\n%WORD% недаром?",
