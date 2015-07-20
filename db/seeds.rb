@@ -6,22 +6,22 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+class ConfirmRegistrationValidator < ActiveModel::Validator
+  def validate(record)
+    return
+  end
+end
+
 User.delete_all
 
-u = User.new
-u.username = "Alex"
-u.url = "http://yandex.by"
-u.level = 3
-u.save
+usernames = ['alex', 'ars', 'valik', 'mike', 'george', 'frank']
 
-u = User.new
-u.username = "Ars"
-u.url = "http://yandex.by"
-u.level = 5
-u.save
+fields = [:username, :name, :surname, :skype, :github, :phone, :vk]
 
-u = User.new
-u.username = "Valik"
-u.url = "http://yandex.by"
-u.level = 5
-u.save
+usernames.each do |username|
+  u = User.new
+  u.rating = rand(3) * 400
+  u.url = "http://#{username}.herokuapp.com"
+  fields.each { |field| u.send(field.to_s + '=', username) }
+  u.save
+end
