@@ -15,7 +15,7 @@ set :ssh_options, { :forward_agent => true }
 
 set :pty,  false
 
-set :rvm_ruby_version, '2.2.1@pushkin-contest'
+set :rvm_ruby_version, '2.2.2@pushkin-contest'
 
 set :sidekiq_config, "#{current_path}/config/sidekiq.yml"
 set :sidekiq_processes, 1
