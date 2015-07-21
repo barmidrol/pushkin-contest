@@ -10,11 +10,15 @@ namespace :db do
     page = mechanize.get("http://ilibrary.ru/author/pushkin/l.all/index.html")
     links = page.parser.css('.list a')
 
-    id_poems = links.map { |l| l.attributes['href'].value.scan(/\d{3}/).join }
-    id_poems = id_poems.drop(8) # drop links to categories
+    id_poems = links.map { |l| l.attributes['href'].value }
+      .select { |l| l =~ %r{/text/\d+/index\.html} }
+      .map { |l| l.scan(/\d+/)[0] }.uniq
 
     num = 0
     size = id_poems.size
+    puts "About to write #{size} poems..."
+
+    Poem.delete_all
 
     id_poems.each do |id|
       link = URL + id + "/p.1/index.html"
@@ -31,6 +35,8 @@ namespace :db do
       puts text.red
       puts "#{num} of #{size}".cyan
       num += 1
+
+      next if text.blank?
 
       poem = Poem.new
       poem.title = title

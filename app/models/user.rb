@@ -24,16 +24,8 @@ class User < ActiveRecord::Base
   end
 
   def set_level
-    self.level = case (self.rating || 0)
-                 when 0..100   then 1
-                 when 101..200 then 2
-                 when 201..300 then 3
-                 when 301..400 then 4
-                 when 401..500 then 5
-                 when 501..600 then 6
-                 when 601..700 then 7
-                 when 701..Float::INFINITY then 8
-                 end
+    # [0..99] => 1 etc
+    self.level = [(self.rating || 0) / 100 + 1, 9].min
   end
 
 end
