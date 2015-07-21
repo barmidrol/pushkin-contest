@@ -15,6 +15,6 @@ namespace :competition do
     end
 
     Task.destroy_all
-    User.find_each { |u| u.rating = 0; u.save }
+    User.update_all(rating: 0, level: 1, winner: false, win_at: nil)
   end
 end
