@@ -11,9 +11,11 @@ class TaskSender
     uri = URI.parse(user.url)
     uri.path = '/quiz'
     data = {question: task.question, id: task.id, level: task.level}
-    options = {content_type: :json, accept: :json, timeout: RESPONSE_IDLE_TIME}
+    headers = { content_type: :json, accept: :json }
 
-    retryable(tries: 3) { RestClient.post(uri.to_s, data.to_json, options) }
+    retryable(tries: 3) do
+      RestClient::Request.execute(method: :post, url: uri.to_s, payload: data.to_json, headers: headers, timeout: 2, open_timeout: 2)
+    end
   end
 
 end
