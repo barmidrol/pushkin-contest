@@ -14,7 +14,11 @@ namespace :competition do
     #   puts "Keeping all #{User.count} users"
     # end
 
-    Task.destroy_all
+    while Task.count > 0 do
+      Task.limit(10000).destroy_all
+      puts "#{Task.count} remaining"
+    end
+    
     User.update_all(rating: 0, level: 1, winner: false, win_at: nil)
   end
 end
