@@ -15,6 +15,7 @@ PushkinContest::Application.routes.draw do
   resources :documentation, only: [:index]
 
   post 'quiz', to: 'quiz#answer'
+  post 'debug/reset', to: 'debug#reset'
 
   mount Sidekiq::Web => '/sidekiq'
 end

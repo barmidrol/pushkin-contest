@@ -27,5 +27,4 @@ class User < ActiveRecord::Base
     # [0..99] => 1 etc
     self.level = [(self.rating || 0) / 100 + 1, 9].min
   end
-
 end
